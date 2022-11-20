@@ -1,3 +1,4 @@
+import { Button, Box } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/auth/thunks';
 import { useAuth } from '../../hooks';
@@ -7,11 +8,15 @@ export const UserMenu = () => {
   const { user } = useAuth();
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+      }}
+    >
       <p>Welcome, {user}</p>
-      <button type="button" onClick={() => dispatch(logOut())}>
+      <Button type="button" color="inherit" onClick={() => dispatch(logOut())}>
         Logout
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
