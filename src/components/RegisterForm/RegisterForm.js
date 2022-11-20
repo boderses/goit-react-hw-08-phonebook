@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/thunks';
-import * as React from 'react';
 import {
   Avatar,
   Button,

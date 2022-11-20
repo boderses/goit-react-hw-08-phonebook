@@ -1,15 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contacts/thunks';
 import { nanoid } from 'nanoid';
-import {
-  ContactAddForm,
-  LableForm,
-  InputForm,
-  ButtonForm,
-} from './PhonebookForm.styled';
+import { Button, TextField, Box, Typography } from '@mui/material';
 
-const PhonebookForm = () => {
+const PhonebookForm = ({ classes }) => {
   const dispatch = useDispatch();
+
   const handleSubmit = event => {
     event.preventDefault();
     const newContact = {
@@ -22,32 +18,47 @@ const PhonebookForm = () => {
   };
 
   return (
-    <div>
-      <ContactAddForm onSubmit={handleSubmit}>
-        <LableForm>
-          Name
-          <InputForm
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-        </LableForm>
-        <LableForm>
-          Phone number
-          <InputForm
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-        </LableForm>
+    <>
+      <Typography component="h1" variant="h5">
+        Phonebook
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="name"
+          label="Name"
+          type="name"
+          id="name"
+          autoComplete="name"
+          autoFocus
+        />
+        <TextField
+          inputProps={{
+            pattern:
+              '+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}',
+          }}
+          margin="normal"
+          type="tel"
+          required
+          fullWidth
+          id="number"
+          label="Phone number"
+          name="number"
+          autoComplete="number"
+        />
 
-        <ButtonForm type="submit">Add contact</ButtonForm>
-      </ContactAddForm>
-    </div>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Add contact
+        </Button>
+      </Box>
+    </>
   );
 };
 

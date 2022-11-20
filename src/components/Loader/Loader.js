@@ -4,12 +4,7 @@ import { LoaderWrapper } from './Loader.styled';
 const Loader = () => {
   return (
     <LoaderWrapper>
-      <Oval
-        color="aquamarine"
-        secondaryColor="#000000"
-        height={100}
-        width={110}
-      />
+      <Oval color="#1976d2" secondaryColor="#000000" height={100} width={110} />
     </LoaderWrapper>
   );
 };
