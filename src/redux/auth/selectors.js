@@ -1,23 +1,5 @@
-import { createSelector } from 'reselect';
+export const authIsLoggedInSelector = state => state.auth.isLoggedIn;
 
-const authStateSelector = state => state.auth;
+export const authUserSelector = state => state.auth.user.name;
 
-export const authIsLoggedInSelector = createSelector(
-  authStateSelector,
-  data => data.isLoggedIn
-);
-
-export const authUserSelector = createSelector(
-  authStateSelector,
-  data => data.user
-);
-
-export const authTokenSelector = createSelector(
-  authStateSelector,
-  data => data.token
-);
-
-export const authIsRefreshingSelector = createSelector(
-  authStateSelector,
-  data => data.isRefreshing
-);
+export const authIsRefreshingSelector = state => state.auth.isRefreshing;

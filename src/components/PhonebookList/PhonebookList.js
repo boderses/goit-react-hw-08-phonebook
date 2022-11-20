@@ -1,10 +1,7 @@
 import { React } from 'react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  contactDeleteThunk,
-  contactsFetchStart,
-} from '../../redux/contacts/thunks';
+import { deleteContact, fetchContacts } from '../../redux/contacts/thunks';
 import ContactItem from './PhonebookItem/PhonebookItem';
 import { ContactListBlock } from './PhonebookList.styled';
 import * as selectors from '../../redux/contacts/selectors';
@@ -15,7 +12,7 @@ const PhonebookList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(contactsFetchStart());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   const getVisibleContacts = () => {
@@ -32,7 +29,7 @@ const PhonebookList = () => {
         <ContactItem
           key={contact.id}
           contact={contact}
-          onDelete={contactId => dispatch(contactDeleteThunk(contactId))}
+          onDelete={contactId => dispatch(deleteContact(contactId))}
         />
       ))}
     </ContactListBlock>

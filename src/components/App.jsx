@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from './Layout/Layout';
 import { PrivateRoute } from './Routes/PrivateRoute';
 import { RestrictedRoute } from './Routes/RestrictedRoute';
-import { refreshUserThunk } from '../redux/auth/thunks';
+import { refreshUser } from '../redux/auth/thunks';
 import { useAuth } from '../hooks';
 
 const HomePage = lazy(() => import('../pages/Home'));
@@ -17,7 +17,7 @@ export const App = () => {
   const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(refreshUserThunk());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return isRefreshing ? (

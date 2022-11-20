@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { logOutThunk } from '../../redux/auth/thunks';
+import { logOut } from '../../redux/auth/thunks';
 import { useAuth } from '../../hooks';
 
 export const UserMenu = () => {
@@ -8,8 +8,8 @@ export const UserMenu = () => {
 
   return (
     <div>
-      <p>Welcome, {user.name}</p>
-      <button type="button" onClick={() => dispatch(logOutThunk())}>
+      <p>Welcome, {user}</p>
+      <button type="button" onClick={() => dispatch(logOut())}>
         Logout
       </button>
     </div>

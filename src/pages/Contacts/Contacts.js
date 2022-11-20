@@ -11,7 +11,7 @@ const Contacts = () => {
   const error = useSelector(selectors.contactsErrorSelector);
   return (
     <>
-      {!loading && !error && <Loader />}
+      {loading && !error && <Loader />}
       {!error && (
         <StyledContainer>
           <h1>Phonebook</h1>

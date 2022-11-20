@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { contactCreateThunk } from '../../redux/contacts/thunks';
+import { addContact } from '../../redux/contacts/thunks';
 import { nanoid } from 'nanoid';
 import {
   ContactAddForm,
@@ -15,9 +15,9 @@ const PhonebookForm = () => {
     const newContact = {
       id: nanoid(),
       name: event.currentTarget.elements.name.value,
-      phone: event.currentTarget.elements.phone.value,
+      number: event.currentTarget.elements.number.value,
     };
-    dispatch(contactCreateThunk(newContact));
+    dispatch(addContact(newContact));
     event.currentTarget.reset();
   };
 
@@ -38,7 +38,7 @@ const PhonebookForm = () => {
           Phone number
           <InputForm
             type="tel"
-            name="phone"
+            name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
