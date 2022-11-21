@@ -1,57 +1,59 @@
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { logIn } from '../../redux/auth/thunks';
-import {
-  Avatar,
-  Button,
-  CssBaseline,
-  TextField,
-  Box,
-  Typography,
-  Container,
-} from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Avatar, Button, TextField, Box, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { StyledError } from './LoginForm.styled';
+
+const schema = yup.object({
+  email: yup
+    .string()
+    .email('Not a proper email')
+    .required('This field is required'),
+  password: yup.string().required('This field is required'),
+});
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
-  const theme = createTheme();
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    dispatch(
-      logIn({
-        email: form.elements.email.value,
-        password: form.elements.password.value,
-      })
-    );
-    form.reset();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccessful]);
+
+  const onSubmitHandler = values => {
+    dispatch(logIn(values));
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+    <>
+      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <LockOutlinedIcon />
+      </Avatar>
+      <Typography component="h1" variant="h5">
+        Sign in
+      </Typography>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmitHandler)}
+        noValidate
+        sx={{ mt: 1 }}
+      >
+        <Controller
+          render={({ field }) => (
             <TextField
               margin="normal"
               required
@@ -60,8 +62,16 @@ export const LoginForm = () => {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
+              {...field}
             />
+          )}
+          name="email"
+          control={control}
+          defaultValue={''}
+        />
+        {errors.email && <StyledError>{errors.email.message}</StyledError>}
+        <Controller
+          render={({ field }) => (
             <TextField
               margin="normal"
               required
@@ -71,19 +81,26 @@ export const LoginForm = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              {...field}
             />
+          )}
+          name="password"
+          control={control}
+          defaultValue={''}
+        />
+        {errors.password && (
+          <StyledError>{errors.password.message}</StyledError>
+        )}
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Sign In
+        </Button>
+      </Box>
+    </>
   );
 };

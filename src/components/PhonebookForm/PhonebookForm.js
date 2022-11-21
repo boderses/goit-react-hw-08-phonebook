@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addContact } from '../../redux/contacts/thunks';
 import { Button, TextField, Box, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { StyledError } from './PhonebookForm.styled';
 
 const schema = yup.object({
   name: yup.string().required('This field is required'),
@@ -67,7 +68,7 @@ const PhonebookForm = () => {
           control={control}
           defaultValue={''}
         />
-        {errors.name && <p>{errors.name.message}</p>}
+        {errors.name && <StyledError>{errors.name.message}</StyledError>}
         <Controller
           render={({ field }) => (
             <TextField
@@ -86,7 +87,7 @@ const PhonebookForm = () => {
           control={control}
           defaultValue={''}
         />
-        {errors.number && <p>{errors.number.message}</p>}
+        {errors.number && <StyledError>{errors.number.message}</StyledError>}
 
         <Button
           type="submit"
